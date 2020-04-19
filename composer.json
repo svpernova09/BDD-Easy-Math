@@ -1,4 +1,7 @@
 {
+  "name": "svpernova09/bdd-easy-math",
+  "description": "Companion code for May 2020 php[architect] column \"The Workshop: Specification BDD with phpspec\"",
+  "license": "MIT",
   "require-dev":{
     "phpspec/phpspec":"^6.1"
 
