@@ -6,7 +6,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [‘7.4’]
+        php: ['7.4', '7.3', '7.2']
     name: PHP ${{ matrix.php }}
     steps:
       - uses: actions/checkout@v1
@@ -20,14 +20,15 @@ jobs:
         run: composer validate
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo “::set-output name=dir::$(composer config cache-files-dir)”
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - name: Cache dependencies
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ matrix.php }}-composer-${{ hashFiles(‘**/composer.lock’) }}
+          key: ${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ matrix.php }}-composer-
       - name: Install dependencies
-        run: composer install —prefer-dist —no-progress —no-suggest
+        run: composer install --prefer-dist --no-progress --no-suggest
       - name: Run test suite
-        run: bin/phpspec
+        run: vendor/bin/phpspec
+
